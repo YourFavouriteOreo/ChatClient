@@ -1,0 +1,64 @@
+@import './components/scss/utils.scss';
+
+.VanSha {
+  background: linear-gradient(to bottom ,#DA4453, #89216B 20%,#dadada 20%);
+  position: absolute;
+  height:100vh;
+  width:100%;
+}
+
+.hero {
+  width: 90vw;
+  margin: auto;
+  margin-top: 2vh;
+  height: 95vh;
+  background: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.topColumn {
+  margin-top:0.5vh;
+  height:7vh;
+  width:100%;
+  border-bottom: 1px solid #c3c3c3;
+}
+
+.customColumn-left{
+  padding-right: 0;
+}
+.customColumn-right{
+  padding-left: 0;
+}
+
+.searchChat {
+  border-radius: 25px;
+  width: 90%;
+  margin:auto;
+  display:block;
+}
+
+.searchChatIcon {
+  margin-left: 1.5vw;
+  color: rgba(212,65,85,0.6) !important
+}
+
+.searchBar {
+  border: 1px solid #c3c3c3;
+  border-top:none;
+  padding:1vh 0;
+  background: linear-gradient(to bottom, #eee, white);
+}
+
+.chatList {
+  height: 102vh;
+  border-right: 1px solid #c3c3c3;
+}
+
+.topBarIcon {
+  margin-left: 2vh;
+}
+
+.scrollbarsClass {
+  height: 500px;
+}

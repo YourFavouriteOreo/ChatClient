@@ -1,0 +1,27 @@
+@import './utils.scss';
+
+.card {
+    margin: 0;
+    &:hover {
+        cursor: pointer;
+        background: #8a216b;
+        color: white;
+    }
+}
+
+.columns:not(:last-child){
+    margin:0
+}
+
+.chatCardDetails {
+    margin-top: 1.2em;
+
+    > h3 {
+        font-family: "Quicksand",sans-serif;
+        font-weight: bold;
+    }
+
+    > p {
+        font-family: "Roboto",sans-serif;
+    }
+}

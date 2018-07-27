@@ -1,0 +1,28 @@
+.avatar {
+  border-radius: 50%;
+  width: 80px; }
+
+.img {
+  height: 100%; }
+
+.smallAvatar {
+  border-radius: 50%;
+  width: 50px; }
+
+.card {
+  margin: 0; }
+  .card:hover {
+    cursor: pointer;
+    background: #8a216b;
+    color: white; }
+
+.columns:not(:last-child) {
+  margin: 0; }
+
+.chatCardDetails {
+  margin-top: 1.2em; }
+  .chatCardDetails > h3 {
+    font-family: "Quicksand",sans-serif;
+    font-weight: bold; }
+  .chatCardDetails > p {
+    font-family: "Roboto",sans-serif; }
