@@ -1,6 +1,7 @@
 {
   "name": "ChatClient",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "engines": { "node": "8.11.3"},
   "description": "",
   "main": "index.js",
   "scripts": {
