@@ -1,7 +1,9 @@
 {
   "name": "ChatClient",
   "version": "0.1.0",
-  "engines": { "node": "8.11.3"},
+  "engines": {
+    "node": "8.11.3"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,9 +13,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GPLv3",
   "dependencies": {
     "express": "^4.16.3",
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "npm-run-all": "^4.1.3"
   }
 }
