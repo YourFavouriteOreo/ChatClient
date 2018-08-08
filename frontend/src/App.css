@@ -61,3 +61,82 @@
 
 .scrollbarsClass {
   height: 500px; }
+
+.chatContent {
+  display: flex;
+  height: calc(92% - 45px);
+  box-shadow: inset 0px 0px 15px #22222230;
+  border-radius: 2px;
+  padding: 1em 2em;
+  display: block; }
+
+.bottomColumn {
+  height: 45px;
+  padding: 0.25rem 0;
+  white-space: nowrap;
+  display: flex;
+  background: linear-gradient(to bottom, #eee, white); }
+  .bottomColumn * {
+    display: inline-block; }
+  .bottomColumn > i {
+    font-size: 2.2em;
+    padding: 0 0.25em; }
+
+.chatBar {
+  border-radius: 25px; }
+
+.chatLogNonUser > p {
+  border-radius: 25px;
+  margin-top: 0.5rem;
+  height: min-content;
+  width: max-content;
+  padding: 0.25rem 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  font-family: "Roboto",sans-serif;
+  display: block;
+  clear: both;
+  border-radius: 25px;
+  border: 1px solid #DA4453;
+  background: #f14d5d;
+  color: white; }
+
+.chatLogUser > p {
+  border-radius: 25px;
+  margin-top: 0.5rem;
+  height: min-content;
+  width: max-content;
+  padding: 0.25rem 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  font-family: "Roboto",sans-serif;
+  display: block;
+  clear: both;
+  border-radius: 25px;
+  border: 1px solid #bb3094;
+  background: #cc33a1;
+  color: white;
+  float: right; }
+
+.typing-indicator {
+  height: 7px;
+  width: 7px;
+  float: left;
+  margin: 0 3px;
+  margin-top: 30%;
+  background-color: #fff;
+  display: block;
+  border-radius: 50%;
+  opacity: 0.4; }
+  .typing-indicator:nth-of-type(1) {
+    animation: 1s blink infinite 0.3333s; }
+  .typing-indicator:nth-of-type(2) {
+    animation: 1s blink infinite 0.6666s; }
+  .typing-indicator:nth-of-type(3) {
+    animation: 1s blink infinite 0.9999s; }
+
+@keyframes blink {
+  50% {
+    opacity: 1; } }
+
+@keyframes bulge {
+  50% {
+    transform: scale(1.05); } }
