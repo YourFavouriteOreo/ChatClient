@@ -17,10 +17,24 @@ class App extends Component {
             <div className="columns">
               <div className="column is-4 customColumn-left">
                 <div className="topColumn">
-                  <img
-                    className="smallAvatar topBarIcon"
-                    src="https://picsum.photos/200/200/?random"
-                  />
+                <div className="level">
+                    <div className="level-left">
+                      {" "}
+                      <img
+                        className="smallAvatar topBarIcon"
+                        src="https://picsum.photos/200/200/?random"
+                        alt=""
+                      />{" "}
+                    </div>
+                    <div className="level-right">
+                      <span className="icon, level-item">
+                        <i className="fas fa-lg fa-comment-alt" />
+                      </span>
+                      <span className="icon level-item">
+                        <i className="fas fa-lg fa-sliders-h" />
+                      </span>
+                    </div>
+                  </div>
                 </div>
                 <div className="searchBar">
                   <div className="field">

@@ -140,3 +140,8 @@
 @keyframes bulge {
   50% {
     transform: scale(1.05); } }
+
+.level-item {
+  padding: 0.5rem;
+  margin-right: 1.25rem;
+  cursor: pointer; }
