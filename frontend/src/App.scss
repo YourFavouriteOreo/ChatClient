@@ -69,14 +69,14 @@
 
 .chatContent {
   display: flex;
-  height: calc(92% - 45px);
+  height: 82vh;
   box-shadow: inset 0px 0px 15px #22222230;
   border-radius: 2px;
   display: block;
 }
 
 .bottomColumn {
-  height: 45px;
+  height: 5.5vh;
   padding: 0.25rem 0;
   white-space: nowrap;
   display: flex;

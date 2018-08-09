@@ -3,7 +3,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 
 function ChatLog(props) {
   return (
-    <div className={props.isUser === true ? "chatLogUser" : "chatLogNonUser"}>
+    <div className={" animated bounceInUp " + (props.isUser === true ? "chatLogUser" : "chatLogNonUser")}>
       <p> {props.content}</p>
     </div>
   );
