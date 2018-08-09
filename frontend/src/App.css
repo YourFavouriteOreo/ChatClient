@@ -172,7 +172,8 @@
       cursor: pointer;
       background: #89216b; }
       .sendButton > button:hover > i {
-        transform: scale(1.5) rotate(50deg);
+        transition: margin-left 0.5s ease-in 0.5s, transform 0.5s ease;
+        transform: scale(1.2) rotate(50deg);
         margin-left: 50px; }
     .sendButton > button:focus {
       border: none;
