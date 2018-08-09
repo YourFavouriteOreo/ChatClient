@@ -153,11 +153,28 @@
 
 .sendButton {
   padding: 0rem 0em; }
+  .sendButton:focus {
+    border: none;
+    box-shadow: none;
+    outline: none; }
   .sendButton > button {
     width: 2.5rem;
     height: 2.3rem;
     font-size: 1rem;
     border: 1px solid grey;
     border-radius: 2px 25px 25px 2px;
-    background: #89216b;
-    color: white; }
+    background: #cc33a1;
+    color: white;
+    transition: all 0.5s ease; }
+    .sendButton > button > i {
+      transition: all 0.5s ease; }
+    .sendButton > button:hover {
+      cursor: pointer;
+      background: #89216b; }
+      .sendButton > button:hover > i {
+        transform: scale(1.5) rotate(50deg);
+        margin-left: 50px; }
+    .sendButton > button:focus {
+      border: none;
+      box-shadow: none;
+      outline: none; }

@@ -31,16 +31,16 @@ class ChatInput extends Component {
     return (
       <div className="bottomColumn">
         <i className="fas fa-laugh-wink" style={{color:"#89216b"}}/>
-        <form onSubmit={this.submitHandler} style={{ width: "100%" }}>
+        <form onSubmit={this.submitHandler} style={{ width: "90%" }}>
           <input
             onChange={this.changeHandler}
             value={this.state.currentInput}
             className="input chatBar"
           />
-        </form>
-        <div className="sendButton">
-        <button type="Submit"> <i className="fas fa-paper-plane" /> </button>
+          <div className="sendButton">
+        <button type="submit"> <i className="fas fa-paper-plane" /> </button>
         </div>
+        </form>
       </div>
     );
   }
