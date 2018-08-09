@@ -1,12 +1,19 @@
+// Module / Utility imports
 import React, { Component } from "react";
 import "./App.css";
 import { Scrollbars } from "react-custom-scrollbars";
+// Custom Components
 import ChatCard from "./components/chatCard";
-const socket = require('socket.io-client')('http://localhost')
+import ActiveChat from  "./components/activeChat";
+
+const socket = require("socket.io-client")("http://localhost");
 
 class App extends Component {
   componentDidMount() {
-    console.log("running")
+    console.log("running");
+    socket.on("register", function(data) {
+      console.log(data);
+    });
   }
 
   render() {
@@ -17,7 +24,7 @@ class App extends Component {
             <div className="columns">
               <div className="column is-4 customColumn-left">
                 <div className="topColumn">
-                <div className="level">
+                  <div className="level">
                     <div className="level-left">
                       {" "}
                       <img
@@ -65,40 +72,7 @@ class App extends Component {
                   </Scrollbars>
                 </div>
               </div>
-              <div className="column is-8 customColumn-right">
-                <div className="topColumn">
-                  <h1> Chat Name </h1>
-                  <p> Chat Participants </p>
-                </div>
-                <div className="chatContent">
-                  <div className="chatLogNonUser">
-                    <p> Hey what's up? </p>
-                  </div>
-                  <div className="chatLogUser">
-                    <p> Nothing much. Just chilling honestly..... you?</p>
-                  </div>
-                  <br />
-                  <div className="chatLogNonUser">
-                    <p>
-                      {" "}
-                      Bored.... Af... I hear antman is out. Wanna go watch it
-                      tonight?
-                    </p>
-                  </div>
-                  <div className="chatLogNonUser">
-                    <p>
-                      <span className="typing-indicator" />
-                      <span className="typing-indicator" />
-                      <span className="typing-indicator" /> &nbsp;
-                    </p>
-                  </div>
-                </div>
-                <div className="bottomColumn">
-                  <i className="fas fa-smile-wink" />
-                  <input className="input chatBar" />
-                  <i className="fas fa-play-circle" />
-                </div>
-              </div>
+              <ActiveChat />
             </div>
           </div>
         </div>

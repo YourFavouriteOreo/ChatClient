@@ -1,7 +1,7 @@
 var express = require('express')
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var io = require('./webSocketHandling').listen(server);
 
 const path = require('path')
 
@@ -17,6 +17,3 @@ server.listen(PORT, function () {
     console.log(`Listening on Port: ${PORT}`);
 })
 
-io.on('connection',function(socket) {
-    console.log("A user has connected");
-})
