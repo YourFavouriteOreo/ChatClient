@@ -4,13 +4,43 @@ import "./App.css";
 import { Scrollbars } from "react-custom-scrollbars";
 // Custom Components
 import ChatCard from "./components/chatCard";
-import ActiveChat from  "./components/activeChat";
+import ActiveChat from "./components/activeChat";
 
 const socket = require("socket.io-client")("http://localhost");
 
 class App extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      chats: [
+        {
+          chatName: "Test Chat Name",
+          chatLogs: [
+            { content: "Hey, what's up?", isUser: false },
+            {
+              content: "Nothing much. Just chilling honestly..... you?",
+              isUser: true
+            },
+            {
+              content:
+                "Bored.... Af... I hear antman is out. Wanna go watch it tonight?",
+              isUser: false
+            }
+          ],
+          isTyping: false
+        }
+      ],
+      activeChat : null
+    };
+  }
+  componentWillMount() {
     console.log("running");
+
+    this.setState({
+      activeChat: this.state.chats[0]
+    })
+
     socket.on("register", function(data) {
       console.log(data);
     });
@@ -72,7 +102,7 @@ class App extends Component {
                   </Scrollbars>
                 </div>
               </div>
-              <ActiveChat />
+              <ActiveChat chat={this.state.activeChat} />
             </div>
           </div>
         </div>

@@ -5,23 +5,23 @@ import ChatInput from "./chatInput";
 class ActiveChat extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      chatName: "Test Chat Name",
-      chatLogs: [
-        { content: "Hey, what's up?", isUser: false },
-        {
-          content: "Nothing much. Just chilling honestly..... you?",
-          isUser: true
-        },
-        {
-          content:
-            "Bored.... Af... I hear antman is out. Wanna go watch it tonight?",
-          isUser: false
-        }
-      ],
-      isTyping: false
-    };
+    if (props.chat === null){
+        this.state = {
+            chatName: "Test Name",
+            chatLogs: [],
+            isTyping: false
+          };
+    }
+    else {
+        this.state = {
+            chatName: props.chat.chatName,
+            chatLogs: props.chat.chatLogs,
+            isTyping: props.isTyping
+          };
+    }
   }
+
+
   inputHandler = logs => {
     // New Var because push return length
     var newState = this.state.chatLogs;
