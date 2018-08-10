@@ -4,7 +4,9 @@ import "./scss/chatCard.css";
 class ChatCard extends Component {
   render() {
     return (
-      <div className="columns card">
+      <div className="columns card" onClick={() => {
+        this.props.onClick();
+      }}>
         <div className="column is-3">
           <img
             className="avatar"
@@ -14,7 +16,7 @@ class ChatCard extends Component {
         </div>
         <div className="column">
           <div className="chatCardDetails">
-            <h3> Name </h3>
+            <h3> {this.props.chatName} </h3>
             <p> Last Message Sent </p>
           </div>
         </div>

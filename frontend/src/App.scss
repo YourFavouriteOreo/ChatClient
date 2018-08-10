@@ -55,7 +55,7 @@
 }
 
 .chatList {
-  height: 102vh;
+  height: 100vh;
   border-right: 1px solid #c3c3c3;
 }
 
@@ -73,6 +73,10 @@
   box-shadow: inset 0px 0px 15px #22222230;
   border-radius: 2px;
   display: block;
+
+  @media screen and (max-width: 1440px) {
+    height: 81.5vh;
+  }
 }
 
 .bottomColumn {
@@ -96,6 +100,9 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   font-family: "Roboto",sans-serif;
+  @media screen and (max-width: 1440px) {
+    width:95%
+  }
   &:focus {
     border-color: #89216b;
     box-shadow: inset 0 0 4px 1px rgba(137, 33, 107, 0.37);
@@ -177,6 +184,10 @@
 
 .sendButton {
   padding: 0rem 0em;
+
+  @media screen and (max-width: 1440px) {
+    margin-right: 20vw;
+  }
 
   &:focus {
     border: none;

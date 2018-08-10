@@ -53,7 +53,7 @@
   background: linear-gradient(to bottom, #eee, white); }
 
 .chatList {
-  height: 102vh;
+  height: 100vh;
   border-right: 1px solid #c3c3c3; }
 
 .topBarIcon {
@@ -68,6 +68,9 @@
   box-shadow: inset 0px 0px 15px #22222230;
   border-radius: 2px;
   display: block; }
+  @media screen and (max-width: 1440px) {
+    .chatContent {
+      height: 81.5vh; } }
 
 .bottomColumn {
   height: 5.5vh;
@@ -86,6 +89,9 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   font-family: "Roboto",sans-serif; }
+  @media screen and (max-width: 1440px) {
+    .chatBar {
+      width: 95%; } }
   .chatBar:focus {
     border-color: #89216b;
     box-shadow: inset 0 0 4px 1px rgba(137, 33, 107, 0.37); }
@@ -153,6 +159,9 @@
 
 .sendButton {
   padding: 0rem 0em; }
+  @media screen and (max-width: 1440px) {
+    .sendButton {
+      margin-right: 20vw; } }
   .sendButton:focus {
     border: none;
     box-shadow: none;

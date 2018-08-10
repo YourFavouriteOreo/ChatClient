@@ -10,8 +10,8 @@ class ChatInput extends Component {
   }
   submitHandler = e => {
     e.preventDefault();
-    if (this.state.currentInput === ""){
-        return null
+    if (this.state.currentInput === "") {
+      return null;
     }
     var chatLog = {
       content: this.state.currentInput,
@@ -30,7 +30,7 @@ class ChatInput extends Component {
   render() {
     return (
       <div className="bottomColumn">
-        <i className="fas fa-laugh-wink" style={{color:"#89216b"}}/>
+        <i className="fas fa-laugh-wink" style={{ color: "#89216b" }} />
         <form onSubmit={this.submitHandler} style={{ width: "90%" }}>
           <input
             onChange={this.changeHandler}
@@ -38,8 +38,11 @@ class ChatInput extends Component {
             className="input chatBar"
           />
           <div className="sendButton">
-        <button type="submit"> <i className="fas fa-paper-plane" /> </button>
-        </div>
+            <button type="submit">
+              {" "}
+              <i className="fas fa-paper-plane" />{" "}
+            </button>
+          </div>
         </form>
       </div>
     );

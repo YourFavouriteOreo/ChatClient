@@ -29,21 +29,42 @@ class App extends Component {
             }
           ],
           isTyping: false
+        },
+        {
+          chatName: "Test Chat 2",
+          chatLogs: [
+            { content: "Hey, what's up dude?", isUser: false },
+            {
+              content: "Nothing much. Just chilling honestly..... you?",
+              isUser: true
+            },
+            {
+              content:
+                "Just watched the new DeadPool Movie! ITS SO SICK!!! ❤️❤️❤️❤️❤️",
+              isUser: false
+            }
+          ],
+          isTyping: true
         }
       ],
       activeChat : null
     };
   }
   componentWillMount() {
-    console.log("running");
-
     this.setState({
-      activeChat: this.state.chats[0]
+      
     })
 
     socket.on("register", function(data) {
       console.log(data);
     });
+  }
+
+  chatCardHandler =(index) =>{
+    console.log("executed chat card hadnler")
+    this.setState({
+      activeChat: this.state.chats[index]
+    })
   }
 
   render() {
@@ -89,16 +110,15 @@ class App extends Component {
                 </div>
                 <div className="chatList">
                   <Scrollbars className="scrollbarsClass">
-                    <ChatCard />
-                    <ChatCard />
-                    <ChatCard />
-                    <ChatCard />
-                    <ChatCard />
-                    <ChatCard />
-                    <ChatCard />
-                    <ChatCard />
-                    <ChatCard />
-                    <ChatCard />
+                    {this.state.chats.map( (val,index) => {
+                      return (<ChatCard key={index} chatName={val.chatName} onClick={() => {this.chatCardHandler(index)}} />)
+                    })}
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
                   </Scrollbars>
                 </div>
               </div>
