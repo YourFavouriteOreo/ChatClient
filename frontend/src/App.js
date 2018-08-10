@@ -51,10 +51,6 @@ class App extends Component {
     };
   }
   componentWillMount() {
-    this.setState({
-      
-    })
-
     socket.on("register", function(data) {
       console.log(data);
     });

@@ -73,6 +73,7 @@
   box-shadow: inset 0px 0px 15px #22222230;
   border-radius: 2px;
   display: block;
+  overflow-y:hidden;
 
   @media screen and (max-width: 1440px) {
     height: 81.5vh;
@@ -225,5 +226,11 @@
       box-shadow:none;
       outline:none;
     }
+  }
+}
+
+.iconButton {
+  &:hover {
+    cursor: pointer;
   }
 }
