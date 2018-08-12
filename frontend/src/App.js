@@ -5,62 +5,41 @@ import { Scrollbars } from "react-custom-scrollbars";
 // Custom Components
 import ChatCard from "./components/chatCard";
 import ActiveChat from "./components/activeChat";
+import { connect } from "react-redux";
+import { selectActiveChat } from "./actions/index";
 
-const socket = require("socket.io-client")("http://localhost");
+
+// const socket = require("socket.io-client")("http://localhost");
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
-      chats: [
-        {
-          chatName: "Test Chat Name",
-          chatLogs: [
-            { content: "Hey, what's up?", isUser: false },
-            {
-              content: "Nothing much. Just chilling honestly..... you?",
-              isUser: true
-            },
-            {
-              content:
-                "Bored.... Af... I hear antman is out. Wanna go watch it tonight?",
-              isUser: false
-            }
-          ],
-          isTyping: false
-        },
-        {
-          chatName: "Test Chat 2",
-          chatLogs: [
-            { content: "Hey, what's up dude?", isUser: false },
-            {
-              content: "Nothing much. Just chilling honestly..... you?",
-              isUser: true
-            },
-            {
-              content:
-                "Just watched the new DeadPool Movie! ITS SO SICK!!! ❤️❤️❤️❤️❤️",
-              isUser: false
-            }
-          ],
-          isTyping: true
-        }
-      ],
-      activeChat : null
+      activeChat : null,
+      userData: {
+        userID: null
+      }
     };
-  }
-  componentWillMount() {
-    socket.on("register", function(data) {
-      console.log(data);
-    });
+
+    this.chatCardHandler = this.chatCardHandler.bind(this);
+
   }
 
-  chatCardHandler =(index) =>{
-    console.log("executed chat card hadnler")
-    this.setState({
-      activeChat: this.state.chats[index]
-    })
+  componentDidMount =()=> {
+    // socket.on("register", (data)=> {
+    //   console.log(data);
+    //   this.setState({
+    //     chats: this.state.chats,
+    //     userData: data
+    //   })
+    // });
+    // console.log(this.state);
+    
+  }
+
+  chatCardHandler (index){
+    this.props.selectActive({index})
   }
 
   render() {
@@ -106,7 +85,7 @@ class App extends Component {
                 </div>
                 <div className="chatList">
                   <Scrollbars className="scrollbarsClass">
-                    {this.state.chats.map( (val,index) => {
+                    {this.props.chats.map( (val,index) => {
                       return (<ChatCard key={index} chatName={val.chatName} onClick={() => {this.chatCardHandler(index)}} />)
                     })}
                     <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
@@ -118,7 +97,7 @@ class App extends Component {
                   </Scrollbars>
                 </div>
               </div>
-              <ActiveChat chat={this.state.activeChat} />
+              <ActiveChat/>
             </div>
           </div>
         </div>
@@ -127,4 +106,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { chats: state.chats };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    selectActive: chat => dispatch(selectActiveChat(chat))
+  }
+}
+
+const Application = connect(mapStateToProps,mapDispatchToProps)(App);
+
+export default Application;

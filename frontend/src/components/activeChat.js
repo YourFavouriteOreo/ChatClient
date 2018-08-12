@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ChatContent from "./chatContent";
 import ChatInput from "./chatInput";
 import NoActiveChat from "./noActivity"
+import { connect } from "react-redux";
+import { updateActiveChat } from "../actions/index";
 
 class ActiveChat extends Component {
   constructor(props) {
@@ -15,27 +17,29 @@ class ActiveChat extends Component {
     }
   }
 
-
-  inputHandler = logs => {
-    // New Var because push return length
-    var newState = this.state.chatLogs;
-    newState.push(logs);
+  componentWillReceiveProps(newProps){
+    // Change Props on Receive 
+    console.log("das new props");
     this.setState({
-      chatLogs: newState,
-    });
-    console.log(this.state.chatLogs);
-  };
-
-  componentWillReceiveProps =(newProps)=>{
-    this.setState({
-        chatName: newProps.chat.chatName,
-        chatLogs: newProps.chat.chatLogs,
-        isTyping: newProps.chat.isTyping
+      chatName: newProps.activeChat.chatName,
+      chatLogs: newProps.activeChat.chatLogs,
+      isTyping: newProps.activeChat.isTyping
     })
   }
 
+
+  inputHandler = logs => {
+    // Handle Input from chatInput
+    var newState = this.state.chatLogs;
+    newState.push(logs);
+    this.props.updateActiveChat(logs)
+    console.log(this.state.chatLogs);
+    // BAD HOTFIX
+    this.setState({});
+  };
+
   render() {
-    if (this.state.chatLogs != null){
+    if (this.state != null){
       return (
         <div className="column is-8 customColumn-right">
           <div className="topColumn">
@@ -43,7 +47,7 @@ class ActiveChat extends Component {
             <p style={{fontFamily:"Roboto,sans-serif",marginLeft: "0.75rem",lineHeight:"1"}}> Chat Participants </p>
           </div>
           <ChatContent
-            chatLogs={this.state.chatLogs}
+            chatLogs={this.props.activeChat.chatLogs}
             isTyping={this.state.isTyping}
           />
           <ChatInput postSubmit={this.inputHandler} />
@@ -56,4 +60,18 @@ class ActiveChat extends Component {
   }
 }
 
-export default ActiveChat;
+//Redux Mapping for Store and Actions
+const mapStateToProps = state => {
+  return { activeChat: state.activeChat };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateActiveChat: chat => dispatch(updateActiveChat(chat))
+  }
+}
+
+const activeChatConnected = connect(mapStateToProps,mapDispatchToProps)(ActiveChat)
+
+
+export default activeChatConnected;

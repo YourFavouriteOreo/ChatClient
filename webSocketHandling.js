@@ -7,7 +7,9 @@ module.exports.listen = function (app) {
 
     io.on('connection',function(socket) {
         console.log('A user has connected')
-        io.emit('register',{userID: uuid()})
+        setTimeout(() => {
+            io.emit('register',{userID: uuid()})
+        },5000)
     })
 
     return io
