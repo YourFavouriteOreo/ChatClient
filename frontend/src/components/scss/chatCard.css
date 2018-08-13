@@ -25,4 +25,5 @@
     font-family: "Quicksand",sans-serif;
     font-weight: bold; }
   .chatCardDetails > p {
-    font-family: "Roboto",sans-serif; }
+    font-family: "Roboto",sans-serif;
+    font-size: 0.9rem; }

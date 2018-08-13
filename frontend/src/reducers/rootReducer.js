@@ -47,12 +47,13 @@ const initialState = {
           // Select Active Chat so as to display chat content
             var newActive = Object.assign(state.chats[action.payload.index])
             newActive["index"]= action.payload.index
-            return {...state,activeChat:newActive}
+            return {...state,activeChat:newActive};
           case UPDATE_CHAT:
           // Update store with new Chat Content
-            var chats = Object.assign(state.chats)
-            chats[state.activeChat.index].chatLogs.concat(action.payload)
-            return {...state,chats}
+          console.log("Update chat action executed");
+            var chatState = Object.assign({},state)
+            chatState.chats[state.activeChat.index].chatLogs = chatState.chats[state.activeChat.index].chatLogs.concat(action.payload)
+            return {...chatState}
           default:
           return state
       }

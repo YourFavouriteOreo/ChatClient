@@ -6,50 +6,27 @@ import { connect } from "react-redux";
 import { updateActiveChat } from "../actions/index";
 
 class ActiveChat extends Component {
-  constructor(props) {
-    super(props);
-    if (props.chat === null){
-        this.state = {
-            chatName: "",
-            chatLogs: null,
-            isTyping: false
-          };
-    }
+
+  constructor () {
+    super();
+
+    this.inputHandler = this.inputHandler.bind(this)
   }
 
-  componentWillReceiveProps(newProps){
-    // Change Props on Receive 
-    console.log("das new props");
-    this.setState({
-      chatName: newProps.activeChat.chatName,
-      chatLogs: newProps.activeChat.chatLogs,
-      isTyping: newProps.activeChat.isTyping
-    })
-  }
-
-
-  inputHandler = logs => {
+  inputHandler(logs){
     // Handle Input from chatInput
-    var newState = this.state.chatLogs;
-    newState.push(logs);
     this.props.updateActiveChat(logs)
-    console.log(this.state.chatLogs);
-    // BAD HOTFIX
-    this.setState({});
   };
 
   render() {
-    if (this.state != null){
+    if (this.props.activeChat != null){
       return (
         <div className="column is-8 customColumn-right">
           <div className="topColumn">
-            <h1 style={{fontFamily:"Quicksand,sans-serif", fontWeight:"bold", fontSize:"1.1rem"}}> {this.state.chatName} </h1>
+            <h1 style={{fontFamily:"Quicksand,sans-serif", fontWeight:"bold", fontSize:"1.1rem"}}> {this.props.activeChat.chatName} </h1>
             <p style={{fontFamily:"Roboto,sans-serif",marginLeft: "0.75rem",lineHeight:"1"}}> Chat Participants </p>
           </div>
-          <ChatContent
-            chatLogs={this.props.activeChat.chatLogs}
-            isTyping={this.state.isTyping}
-          />
+          <ChatContent/>
           <ChatInput postSubmit={this.inputHandler} />
         </div>
       );

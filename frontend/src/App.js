@@ -9,33 +9,18 @@ import { connect } from "react-redux";
 import { selectActiveChat } from "./actions/index";
 
 
-// const socket = require("socket.io-client")("http://localhost");
+const socket = require("socket.io-client")("http://localhost");
 
 class App extends Component {
   constructor() {
     super();
-
-    this.state = {
-      activeChat : null,
-      userData: {
-        userID: null
-      }
-    };
-
     this.chatCardHandler = this.chatCardHandler.bind(this);
-
   }
 
   componentDidMount =()=> {
-    // socket.on("register", (data)=> {
-    //   console.log(data);
-    //   this.setState({
-    //     chats: this.state.chats,
-    //     userData: data
-    //   })
-    // });
-    // console.log(this.state);
-    
+    socket.on("register", (data)=> {
+      console.log(data);
+    });
   }
 
   chatCardHandler (index){
@@ -86,14 +71,14 @@ class App extends Component {
                 <div className="chatList">
                   <Scrollbars className="scrollbarsClass">
                     {this.props.chats.map( (val,index) => {
-                      return (<ChatCard key={index} chatName={val.chatName} onClick={() => {this.chatCardHandler(index)}} />)
+                      return (<ChatCard key={index} chatName={val.chatName} lastMessage={val.chatLogs[val.chatLogs.length-1].content} onClick={() => {this.chatCardHandler(index)}} />)
                     })}
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  />
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY " lastMessage="Test last Message" />
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message" />
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message"/>
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message"/>
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message"/>
+                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message"/>
                   </Scrollbars>
                 </div>
               </div>

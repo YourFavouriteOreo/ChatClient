@@ -2,6 +2,15 @@ import React, { Component } from "react";
 import "./scss/chatCard.css";
 
 class ChatCard extends Component {
+  constructor(){
+    super();
+
+    this.lastMessageHandler = this.lastMessageHandler.bind(this);
+  }
+  lastMessageHandler() {
+    var lastMessage= String(this.props.lastMessage)  
+    return lastMessage.substring(0,40)+"..."
+  }
   render() {
     return (
       <div className="columns card" onClick={() => {
@@ -17,7 +26,7 @@ class ChatCard extends Component {
         <div className="column">
           <div className="chatCardDetails">
             <h3> {this.props.chatName} </h3>
-            <p> Last Message Sent </p>
+            <p> {this.lastMessageHandler()} </p>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
+import { connect } from "react-redux";
 
 function ChatLog(props) {
   return (
@@ -15,28 +16,12 @@ function ChatLog(props) {
 }
 
 class chatContent extends Component {
-  constructor(props) {
-    super(props);
-    if (props.chatLogs != null) {
-      this.state = {
-        chatLogs: props.chatLogs,
-        isTyping: props.isTyping
-      };
-    }
-  }
-  componentWillReceiveProps = newProps => {
-    this.setState({
-      chatLogs: newProps.chatLogs,
-      isTyping: newProps.isTyping
-    });
-  };
-
   render() {
     return (
       <div className="chatContent">
         <Scrollbars className="scrollbarsClass">
           <div style={{ padding: "1rem 2rem" }}>
-            {this.state.chatLogs.map(function(val, index) {
+            {this.props.chatLogs.map(function(val, index) {
               return (
                 <ChatLog
                   key={index}
@@ -48,7 +33,7 @@ class chatContent extends Component {
             <div
               className="chatLogNonUser"
               style={{
-                visibility: this.state.isTyping === true ? "visible" : "hidden"
+                visibility: this.props.isTyping === true ? "visible" : "hidden"
               }}
             >
               <p>
@@ -64,4 +49,14 @@ class chatContent extends Component {
   }
 }
 
-export default chatContent;
+const mapStateToProps = state => {
+  return { 
+    chatLogs: state.activeChat.chatLogs,
+    isTyping: state.activeChat.isTyping
+  };
+};
+
+const chatContentConnected = connect(mapStateToProps,null)(chatContent)
+
+
+export default chatContentConnected;
