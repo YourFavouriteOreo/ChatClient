@@ -7,8 +7,7 @@ import ChatCard from "./components/chatCard";
 import ActiveChat from "./components/activeChat";
 import { connect } from "react-redux";
 import { selectActiveChat } from "./actions/index";
-
-
+import RegistrationModal from "./components/registrationModal"
 const socket = require("socket.io-client")("http://localhost");
 
 class App extends Component {
@@ -17,19 +16,29 @@ class App extends Component {
     this.chatCardHandler = this.chatCardHandler.bind(this);
   }
 
-  componentDidMount =()=> {
-    socket.on("register", (data)=> {
-      console.log(data);
-    });
+  componentDidMount = () => {
+    // socket.on("register", data => {
+    //   console.log(data);
+    // });
+  };
+
+  componentWillReceiveProps(newProps) {
+  }
+  chatCardHandler(index) {
+    this.props.selectActive({ index });
   }
 
-  chatCardHandler (index){
-    this.props.selectActive({index})
+  chatCardActiveHandler(index) {
+    if (this.props.activeChat) {
+      return index === this.props.activeChat.index ? "active" : "";
+    }
+    return "";
   }
 
   render() {
     return (
       <div className="App">
+      <RegistrationModal socket={socket}/>
         <div className="VanSha justify-content-between ">
           <div className="hero">
             <div className="columns">
@@ -46,10 +55,7 @@ class App extends Component {
                     </div>
                     <div className="level-right">
                       <span className="icon, level-item">
-                        <i className="fas fa-lg fa-comment-alt" />
-                      </span>
-                      <span className="icon level-item">
-                        <i className="fas fa-lg fa-sliders-h" />
+                        <i className="fas fa-lg fa-plus" />
                       </span>
                     </div>
                   </div>
@@ -70,19 +76,25 @@ class App extends Component {
                 </div>
                 <div className="chatList">
                   <Scrollbars className="scrollbarsClass">
-                    {this.props.chats.map( (val,index) => {
-                      return (<ChatCard key={index} chatName={val.chatName} lastMessage={val.chatLogs[val.chatLogs.length-1].content} onClick={() => {this.chatCardHandler(index)}} />)
+                    {this.props.chats.map((val, index) => {
+                      return (
+                        <ChatCard
+                          key={index}
+                          chatName={val.chatName}
+                          lastMessage={
+                            val.chatLogs[val.chatLogs.length - 1].content
+                          }
+                          onClick={() => {
+                            this.chatCardHandler(index);
+                          }}
+                          isActive={this.chatCardActiveHandler(index)}
+                        />
+                      );
                     })}
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY " lastMessage="Test last Message" />
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message" />
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message"/>
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message"/>
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message"/>
-                    <ChatCard  chatName="DONT TOUCH IS FOR DISPLAY ONLY "  lastMessage="Test last Message"/>
                   </Scrollbars>
                 </div>
               </div>
-              <ActiveChat/>
+              <ActiveChat />
             </div>
           </div>
         </div>
@@ -92,14 +104,17 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return { chats: state.chats };
+  return {
+    chats: state.chats,
+    activeChat: state.activeChat
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     selectActive: chat => dispatch(selectActiveChat(chat))
-  }
-}
+  };
+};
 
 const Application = connect(mapStateToProps,mapDispatchToProps)(App);
 

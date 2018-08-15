@@ -9,11 +9,15 @@ class ChatCard extends Component {
   }
   lastMessageHandler() {
     var lastMessage= String(this.props.lastMessage)  
-    return lastMessage.substring(0,40)+"..."
+    if (lastMessage.length > 45){
+      return lastMessage.substring(0,40)+"..."
+    }
+    return lastMessage
   }
   render() {
     return (
-      <div className="columns card" onClick={() => {
+      <div className={"columns card "+ this.props.isActive} onClick={() => {
+        console.log(this.props.isActive)
         this.props.onClick();
       }}>
         <div className="column is-3">

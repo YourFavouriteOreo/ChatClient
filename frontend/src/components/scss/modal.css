@@ -1,0 +1,59 @@
+.header-text {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem; }
+
+.header-description {
+  font-family: "Roboto",sans-serif;
+  font-size: 0.9rem;
+  text-align: center; }
+
+.control {
+  margin: 0.75rem 0; }
+
+input {
+  font-family: "Quicksand", sans-serif;
+  text-align: center;
+  border-radius: 100px !important;
+  border: 1px dashed #89216b !important;
+  cursor: text !important; }
+
+.loadingContainer {
+  width: 100%; }
+
+.loadingIcon {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 20vh; }
+
+.modal-card-body {
+  border-radius: 10px; }
+
+.submitButton {
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  transition: all .1s ease;
+  font-size: 18px;
+  background: #89216b;
+  color: white;
+  padding: 0.2rem 0.75rem;
+  border-radius: 5px;
+  display: block;
+  margin: auto; }
+  @media (max-width: 1360px) {
+    .submitButton {
+      font-size: 14px; } }
+  .submitButton:hover {
+    color: #89216b;
+    background: white; }
+    .submitButton:hover > i {
+      margin-left: 1.2rem; }
+  .submitButton:active, .submitButton:focus {
+    color: #89216b;
+    background: white; }
+  .submitButton > i {
+    font-size: 15px;
+    margin-left: 0.6rem;
+    transition: all 0.25s ease; }

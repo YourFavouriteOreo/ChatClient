@@ -1,4 +1,5 @@
-import {SELECT_ACTIVE, UPDATE_CHAT} from '../constants/action-types'
+import {SELECT_ACTIVE, UPDATE_CHAT, UPDATE_USERID} from '../constants/action-types';
+import _ from "lodash";
 
 const initialState = {
     chats: [
@@ -43,17 +44,26 @@ const initialState = {
 
   const rootReducer = (state = initialState,action) => {
       switch(action.type){
+
           case SELECT_ACTIVE:
           // Select Active Chat so as to display chat content
-            var newActive = Object.assign(state.chats[action.payload.index])
+            var newState = Object.assign(state)
+            var newActive = newState.chats[action.payload.index]
             newActive["index"]= action.payload.index
             return {...state,activeChat:newActive};
+
           case UPDATE_CHAT:
           // Update store with new Chat Content
           console.log("Update chat action executed");
-            var chatState = Object.assign({},state)
+            var chatState = _.cloneDeep(state)
             chatState.chats[state.activeChat.index].chatLogs = chatState.chats[state.activeChat.index].chatLogs.concat(action.payload)
             return {...chatState}
+            case UPDATE_USERID:
+          // Update store with new Chat Content
+          console.log("Update USERID action executed");
+            var newState = Object.assign(state)
+            newState.userData.userID = action.payload.userID
+            return {...newState}
           default:
           return state
       }

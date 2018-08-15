@@ -15,6 +15,9 @@
     cursor: pointer;
     background: #8a216b;
     color: white; }
+  .card.active {
+    background: #8a216b;
+    color: white; }
 
 .columns:not(:last-child) {
   margin: 0; }
