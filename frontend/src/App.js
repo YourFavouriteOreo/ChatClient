@@ -8,7 +8,7 @@ import ActiveChat from "./components/activeChat";
 import { connect } from "react-redux";
 import { selectActiveChat } from "./actions/index";
 import RegistrationModal from "./components/registrationModal"
-const socket = require("socket.io-client")("http://localhost");
+const socket = require("socket.io-client")("http://"+window.location.hostname);
 
 class App extends Component {
   constructor() {
