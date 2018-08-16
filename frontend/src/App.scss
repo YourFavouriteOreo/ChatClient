@@ -1,5 +1,5 @@
 @import "./components/scss/utils.scss";
-
+@import '../node_modules/bulma/bulma.sass';
 @mixin silverGradient {
   background: linear-gradient(to bottom, #eee, white);
 }
@@ -107,73 +107,6 @@
   &:focus {
     border-color: #89216b;
     box-shadow: inset 0 0 4px 1px rgba(137, 33, 107, 0.37);
-  }
-}
-
-@mixin chatLog {
-  border-radius: 25px;
-  height: min-content;
-  width: max-content;
-  padding: 0.25rem 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  font-family: "Roboto", sans-serif;
-}
-
-@mixin chatLogGeneral {
-  display: flex;
-  padding: 0.5rem 0;
-}
-
-.chatLogNonUser {
-  @include chatLogGeneral;
-  > p {
-    @include chatLog;
-    border-radius: 25px;
-    border: 1px solid #da4453;
-    background: rgb(241, 77, 93);
-    color: white;
-  }
-}
-
-.chatLogUser {
-  @include chatLogGeneral;
-  justify-content: flex-end;
-  > p {
-    @include chatLog;
-    border-radius: 25px;
-    border: 1px solid rgb(187, 48, 148);
-    background: rgb(204, 51, 161);
-    color: white;
-  }
-}
-
-//Typing Animation
-.typing-indicator {
-  height: 7px;
-  width: 7px;
-  float: left;
-  margin: 0 3px;
-  margin-top: 30%;
-  background-color: #fff;
-  display: block;
-  border-radius: 50%;
-  opacity: 0.4;
-  @for $i from 1 through 3 {
-    &:nth-of-type(#{$i}) {
-      animation: 1s blink infinite ($i * 0.3333s);
-    }
-  }
-}
-
-@keyframes blink {
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes bulge {
-  50% {
-    transform: scale(1.05);
   }
 }
 

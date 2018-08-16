@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { connect } from "react-redux";
+import './scss/chatContent.css'
 
 function ChatLog(props) {
   return (
@@ -36,7 +37,7 @@ class chatContent extends Component {
                 visibility: this.props.isTyping === true ? "visible" : "hidden"
               }}
             >
-              <p>
+              <p className="bulge">
                 <span className="typing-indicator" />
                 <span className="typing-indicator" />
                 <span className="typing-indicator" /> &nbsp;

@@ -7,12 +7,19 @@ import ChatCard from "./components/chatCard";
 import ActiveChat from "./components/activeChat";
 import { connect } from "react-redux";
 import { selectActiveChat } from "./actions/index";
-import RegistrationModal from "./components/registrationModal"
-const socket = require("socket.io-client")("http://"+window.location.hostname);
+import RegistrationModal from "./components/registrationModal";
+const socket = require("socket.io-client")(
+  "http://" + window.location.hostname
+);
 
 class App extends Component {
   constructor() {
     super();
+    this.state = {
+      menuControl: {
+        isAdding: false
+      }
+    }
     this.chatCardHandler = this.chatCardHandler.bind(this);
   }
 
@@ -22,8 +29,7 @@ class App extends Component {
     // });
   };
 
-  componentWillReceiveProps(newProps) {
-  }
+  componentWillReceiveProps(newProps) {}
   chatCardHandler(index) {
     this.props.selectActive({ index });
   }
@@ -38,7 +44,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <RegistrationModal socket={socket}/>
+        <RegistrationModal socket={socket} />
         <div className="VanSha justify-content-between ">
           <div className="hero">
             <div className="columns">
@@ -55,7 +61,20 @@ class App extends Component {
                     </div>
                     <div className="level-right">
                       <span className="icon, level-item">
-                        <i className="fas fa-lg fa-plus" />
+                        <div className={"dropdown "+ (this.state.menuControl.isAdding? "is-active":"")}>
+                          <div className="dropdown-trigger">
+                              <span className="icon iconButton is-small" onClick={()=> {this.setState({menuControl: {isAdding:!this.state.menuControl.isAdding}})}}>
+                                <i className="fas fa-plus" aria-hidden="true" />
+                              </span>
+                          </div>
+                          <div className="dropdown-menu" id="dropdown-menu7" role="menu">
+                          <div className="dropdown-content">
+                          <div className="dropdown-item">
+                          <p>You can add the <code>is-up</code> modifier to have a dropdown menu that appears above the dropdown button.</p>
+                          </div>
+                          </div>
+                          </div>
+                        </div>
                       </span>
                     </div>
                   </div>
@@ -94,7 +113,7 @@ class App extends Component {
                   </Scrollbars>
                 </div>
               </div>
-              <ActiveChat />
+              <ActiveChat socket={socket} />
             </div>
           </div>
         </div>
@@ -116,6 +135,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const Application = connect(mapStateToProps,mapDispatchToProps)(App);
+const Application = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
 
 export default Application;
