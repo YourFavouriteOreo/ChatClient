@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import 'emoji-mart/css/emoji-mart.css'
+
 
 class ChatInput extends Component {
   constructor(props) {

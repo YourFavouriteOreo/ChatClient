@@ -1,9 +1,9 @@
-import {SELECT_ACTIVE, UPDATE_CHAT, UPDATE_USERID} from '../constants/action-types';
+import {SELECT_ACTIVE, UPDATE_CHAT, UPDATE_USERID,UPDATE_CHAT_LIST} from '../constants/action-types';
 import _ from "lodash";
 
 const initialState = {
-    chats: [
-      {
+    chats: {
+      "Fart":{
         chatName: "Test Chat Name",
         chatLogs: [
           { content: "Hey, what's up?", isUser: false },
@@ -19,7 +19,7 @@ const initialState = {
         ],
         isTyping: false
       },
-      {
+      "id2":{
         chatName: "Test Chat 2",
         chatLogs: [
           { content: "Hey, what's up dude?", isUser: false },
@@ -35,7 +35,7 @@ const initialState = {
         ],
         isTyping: true
       }
-    ],
+    },
     activeChat : null,
     userData: {
       userID: null
@@ -43,11 +43,12 @@ const initialState = {
   };
 
   const rootReducer = (state = initialState,action) => {
+    var newState
       switch(action.type){
 
           case SELECT_ACTIVE:
           // Select Active Chat so as to display chat content
-            var newState = Object.assign(state)
+            newState = Object.assign(state)
             var newActive = newState.chats[action.payload.index]
             newActive["index"]= action.payload.index
             return {...state,activeChat:newActive};
@@ -58,12 +59,25 @@ const initialState = {
             var chatState = _.cloneDeep(state)
             chatState.chats[state.activeChat.index].chatLogs = chatState.chats[state.activeChat.index].chatLogs.concat(action.payload)
             return {...chatState}
+
             case UPDATE_USERID:
           // Update store with new Chat Content
           console.log("Update USERID action executed");
-            var newState = Object.assign(state)
+            newState = Object.assign(state)
             newState.userData.userID = action.payload.userID
             return {...newState}
+
+            case UPDATE_CHAT_LIST:
+            newState = _.cloneDeep(state)
+            newState.chats[action.payload] = {
+              chatName: "Test Chat 24",
+              chatLogs: [
+                { content: "Hey, what's up dude?", isUser: false }
+              ],
+              isTyping: true
+            }
+            return newState
+
           default:
           return state
       }

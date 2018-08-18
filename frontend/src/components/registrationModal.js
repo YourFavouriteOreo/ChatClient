@@ -8,7 +8,8 @@ class RegistrationModal extends Component {
     super();
 
     this.state = {
-      isComplete : false
+      isComplete : false,
+      received: false
     }
   }
 
@@ -22,16 +23,18 @@ class RegistrationModal extends Component {
         socket.on("register", data => {
               console.log(data);
               this.props.updateUserID(data)
+              socket.removeListener('register');
             });
     }
+
   render() {
     return (
       <div className={"modal "+ (this.state.isComplete?"":"is-active")}>
         <div className="modal-background" />
         <div className="modal-card">
           <section className="modal-card-body">
-            {this.props.userID 
-            ?( 
+            {this.props.userID
+            ?(
             <div>
                 <h1 className="header-text"> Welcome to <span className="purple">Oreo Client</span></h1>
             <p className="header-description"> Below is your ID . If you would like to re-use existing chats in future visits</p>
@@ -42,12 +45,11 @@ class RegistrationModal extends Component {
             <div className="control">
             <input className="input inputRegistration animated " />
             </div>
-            <button className="button submitButton" onClick={() => {this.toggleComplete()}}> Continue <i className="fas fa-arrow-right"> </i></button>
+            <button className="button submitButton" type="submit" onClick={() => {this.toggleComplete()}}> Continue <i className="fas fa-arrow-right"> </i></button>
             </div>
             )
             : <div> <h1 className="header-text"> We are preparing your User ID . Please wait a moment.</h1>  <img alt="Loading Icon" className="loadingIcon" src={require("../assets/img/loading.svg")} /></div>
          }
-         
           </section>
         </div>
       </div>

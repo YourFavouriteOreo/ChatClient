@@ -6,27 +6,25 @@ import { Scrollbars } from "react-custom-scrollbars";
 import ChatCard from "./components/chatCard";
 import ActiveChat from "./components/activeChat";
 import { connect } from "react-redux";
-import { selectActiveChat } from "./actions/index";
+import { selectActiveChat,updateChatList } from "./actions/index";
 import RegistrationModal from "./components/registrationModal";
+import DropDown from "./components/DropDown"
 const socket = require("socket.io-client")(
   "http://" + window.location.hostname
 );
 
+const DEBUG = false;
+
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      menuControl: {
-        isAdding: false
-      }
-    }
     this.chatCardHandler = this.chatCardHandler.bind(this);
   }
 
   componentDidMount = () => {
-    // socket.on("register", data => {
-    //   console.log(data);
-    // });
+    socket.on("Add Chat", data => {
+      this.props.updateChatList(data)
+    });
   };
 
   componentWillReceiveProps(newProps) {}
@@ -44,7 +42,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <RegistrationModal socket={socket} />
+        {DEBUG?"":<RegistrationModal socket={socket} />}
         <div className="VanSha justify-content-between ">
           <div className="hero">
             <div className="columns">
@@ -61,20 +59,7 @@ class App extends Component {
                     </div>
                     <div className="level-right">
                       <span className="icon, level-item">
-                        <div className={"dropdown "+ (this.state.menuControl.isAdding? "is-active":"")}>
-                          <div className="dropdown-trigger">
-                              <span className="icon iconButton is-small" onClick={()=> {this.setState({menuControl: {isAdding:!this.state.menuControl.isAdding}})}}>
-                                <i className="fas fa-plus" aria-hidden="true" />
-                              </span>
-                          </div>
-                          <div className="dropdown-menu" id="dropdown-menu7" role="menu">
-                          <div className="dropdown-content">
-                          <div className="dropdown-item">
-                          <p>You can add the <code>is-up</code> modifier to have a dropdown menu that appears above the dropdown button.</p>
-                          </div>
-                          </div>
-                          </div>
-                        </div>
+                        <DropDown socket={socket}/>
                       </span>
                     </div>
                   </div>
@@ -95,20 +80,21 @@ class App extends Component {
                 </div>
                 <div className="chatList">
                   <Scrollbars className="scrollbarsClass">
-                    {this.props.chats.map((val, index) => {
-                      return (
-                        <ChatCard
-                          key={index}
-                          chatName={val.chatName}
-                          lastMessage={
-                            val.chatLogs[val.chatLogs.length - 1].content
-                          }
-                          onClick={() => {
-                            this.chatCardHandler(index);
-                          }}
-                          isActive={this.chatCardActiveHandler(index)}
-                        />
-                      );
+                    {Object.keys(this.props.chats).map((key, index) => {
+console.log(index);
+  return (
+    <ChatCard
+      key={key}
+      chatName={this.props.chats[key]["chatName"]}
+      lastMessage={
+        (this.props.chats[key].chatLogs?this.props.chats[key].chatLogs[this.props.chats[key].chatLogs.length-1].content:"")
+      }
+      onClick={() => {
+        this.chatCardHandler(key);
+      }}
+      isActive={this.chatCardActiveHandler(key)}
+    />
+  );
                     })}
                   </Scrollbars>
                 </div>
@@ -131,7 +117,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    selectActive: chat => dispatch(selectActiveChat(chat))
+    selectActive: chat => dispatch(selectActiveChat(chat)),
+    updateChatList: chat => dispatch(updateChatList(chat))
   };
 };
 

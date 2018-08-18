@@ -1,0 +1,93 @@
+@import './_utils.scss';
+
+.dropdown-content{
+    width:40vh;
+}
+
+.dropdown-header-text {
+    font-family: $Primary-font;
+    font-weight: bold;
+    text-align:center;
+    font-size: 0.8rem;
+    .purple{
+        color:$Purple;
+    }
+}
+
+.dropdown-header-description {
+    font-family: "Roboto",sans-serif;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.dropdown-input {
+    border-radius: 25px;
+    display:block;
+    width:75%;
+    margin:auto;
+    height:2rem;
+}
+
+.spacing {
+    margin-top: 0.75rem !important;
+}
+
+.control {
+    margin:0.75rem 0;
+}
+
+.inputRegistration {
+    color: $Purple !important;
+    font-family: $Primary-font;
+    text-align:center;
+    border-radius:100px !important;
+    border: 1px dashed $Purple !important;
+    cursor:text !important;
+}
+
+.loadingContainer {
+    width:100%
+}
+
+.loadingIcon {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 20vh
+}
+
+.modal-card-body {
+    border-radius:10px;
+}
+
+.submitButton {
+    font-family: $Primary-font;
+    font-weight: bold;
+    transition: all .1s ease;
+    font-size: 18px;
+    background: $Purple;
+    color: white;
+    padding: 0.2rem 0.75rem;
+    border-radius:5px;
+    display: block;
+    margin:auto;
+    @media (max-width:1360px){
+        font-size: 14px;
+    }
+    &:hover{
+        color: $Purple;
+        background: white;
+        > i{
+            margin-left: 1.2rem;
+        }
+    }
+    &:active,&:focus{
+        color:$Purple;
+        background: white;
+    }
+    > i {
+        font-size:15px; 
+        margin-left: 0.6rem;
+        transition: all 0.25s ease;
+    }
+}

@@ -15,15 +15,7 @@ class ActiveChat extends Component {
 
   inputHandler(logs){
     // Handle Input from chatInput
-    console.log(logs);
     this.props.updateActiveChat(logs)
-    console.log("emitted")
-    console.log(this.props.socket);
-    var socket = this.props.socket;
-    socket.emit('chat',logs.content)
-    socket.on('chat',(data)=>{
-      this.props.updateActiveChat({content:data, isUser:false})
-    })
   };
 
   render() {
