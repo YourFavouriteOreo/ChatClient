@@ -3,38 +3,7 @@ import _ from "lodash";
 
 const initialState = {
     chats: {
-      "Fart":{
-        chatName: "Test Chat Name",
-        chatLogs: [
-          { content: "Hey, what's up?", isUser: false },
-          {
-            content: "Nothing much. Just chilling honestly..... you?",
-            isUser: true
-          },
-          {
-            content:
-              "Bored.... Af... I hear antman is out. Wanna go watch it tonight?",
-            isUser: false
-          }
-        ],
-        isTyping: false
-      },
-      "id2":{
-        chatName: "Test Chat 2",
-        chatLogs: [
-          { content: "Hey, what's up dude?", isUser: false },
-          {
-            content: "Nothing much. Just chilling honestly..... you?",
-            isUser: true
-          },
-          {
-            content:
-              "Just watched the new DeadPool Movie! ITS SO SICK!!! ❤️❤️❤️❤️❤️",
-            isUser: false
-          }
-        ],
-        isTyping: true
-      }
+
     },
     activeChat : null,
     userData: {
@@ -55,24 +24,25 @@ const initialState = {
 
           case UPDATE_CHAT:
           // Update store with new Chat Content
-          console.log("Update chat action executed");
             var chatState = _.cloneDeep(state)
-            chatState.chats[state.activeChat.index].chatLogs = chatState.chats[state.activeChat.index].chatLogs.concat(action.payload)
+            var chatToBeUpdated = chatState.chats[action.payload.id]
+            chatToBeUpdated.chatLogs = chatToBeUpdated.chatLogs.concat(action.payload.chatLog)
             return {...chatState}
 
             case UPDATE_USERID:
-          // Update store with new Chat Content
-          console.log("Update USERID action executed");
+          // Update user ID upon receiving registration
             newState = Object.assign(state)
             newState.userData.userID = action.payload.userID
             return {...newState}
 
             case UPDATE_CHAT_LIST:
+            // Create new chats than have been verified via server 
             newState = _.cloneDeep(state)
             newState.chats[action.payload] = {
-              chatName: "Test Chat 24",
+              id: action.payload,
+              chatName: action.payload,
               chatLogs: [
-                { content: "Hey, what's up dude?", isUser: false }
+                
               ],
               isTyping: true
             }

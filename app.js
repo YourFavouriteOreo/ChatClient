@@ -1,6 +1,7 @@
 var express = require('express')
 var app = express();
 var server = require('http').Server(app);
+
 var chats = {length:0};
 var currentUsers = {length:0};
 var io = require('./webSocketHandling').listen(server,{chats,currentUsers});

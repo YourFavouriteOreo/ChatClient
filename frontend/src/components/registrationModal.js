@@ -21,7 +21,6 @@ class RegistrationModal extends Component {
     componentWillMount(){
         var socket = this.props.socket;
         socket.on("register", data => {
-              console.log(data);
               this.props.updateUserID(data)
               socket.removeListener('register');
             });
@@ -58,7 +57,6 @@ class RegistrationModal extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
       userID: state.userData.userID,
     };

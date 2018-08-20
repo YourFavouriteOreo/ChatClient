@@ -15,14 +15,14 @@ class ChatInput extends Component {
     if (this.state.currentInput === "") {
       return null;
     }
-    var chatLog = {
-      content: this.state.currentInput,
-      isUser: true
-    };
+
+    var content = this.state.currentInput
+
     this.setState({
       currentInput: ""
     });
-    this.props.postSubmit(chatLog);
+    
+    this.props.postSubmit(content);
   };
   changeHandler = e => {
     this.setState({

@@ -6,7 +6,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 import ChatCard from "./components/chatCard";
 import ActiveChat from "./components/activeChat";
 import { connect } from "react-redux";
-import { selectActiveChat,updateChatList } from "./actions/index";
+import { selectActiveChat,updateChatList,updateChat } from "./actions/index";
 import RegistrationModal from "./components/registrationModal";
 import DropDown from "./components/DropDown"
 const socket = require("socket.io-client")(
@@ -25,9 +25,13 @@ class App extends Component {
     socket.on("Add Chat", data => {
       this.props.updateChatList(data)
     });
+    socket.on("Chat Broadcast",data => {
+      console.log("CHAT BROADCAST RECEIVED")
+      this.props.updateChat(data)
+    })
   };
 
-  componentWillReceiveProps(newProps) {}
+  componentWillReceiveProps() {}
   chatCardHandler(index) {
     this.props.selectActive({ index });
   }
@@ -81,20 +85,19 @@ class App extends Component {
                 <div className="chatList">
                   <Scrollbars className="scrollbarsClass">
                     {Object.keys(this.props.chats).map((key, index) => {
-console.log(index);
-  return (
-    <ChatCard
-      key={key}
-      chatName={this.props.chats[key]["chatName"]}
-      lastMessage={
-        (this.props.chats[key].chatLogs?this.props.chats[key].chatLogs[this.props.chats[key].chatLogs.length-1].content:"")
-      }
-      onClick={() => {
-        this.chatCardHandler(key);
-      }}
-      isActive={this.chatCardActiveHandler(key)}
-    />
-  );
+                      return (
+                        <ChatCard
+                          key={key}
+                          chatName={this.props.chats[key]["chatName"]}
+                          lastMessage={
+                            (this.props.chats[key].chatLogs?this.props.chats[key].chatLogs[this.props.chats[key].chatLogs.length-1].content:"")
+                          }
+                          onClick={() => {
+                            this.chatCardHandler(key);
+                          }}
+                          isActive={this.chatCardActiveHandler(key)}
+                        />
+                      );
                     })}
                   </Scrollbars>
                 </div>
@@ -118,7 +121,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     selectActive: chat => dispatch(selectActiveChat(chat)),
-    updateChatList: chat => dispatch(updateChatList(chat))
+    updateChatList: chat => dispatch(updateChatList(chat)),
+    updateChat: logs => dispatch(updateChat(logs))
   };
 };
 

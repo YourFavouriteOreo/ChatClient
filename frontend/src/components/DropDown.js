@@ -46,7 +46,7 @@ class DropDown extends Component {
           </span>
         </div>
         <div className="dropdown-menu" id="dropdown-menu7" role="menu">
-          <div className="dropdown-content">
+          <div className={"dropdown-content" + (this.state.isActive ? " is-active" : "")}>
             <div className="dropdown-item">
               <form onSubmit={this.onSubmitHandler}>
               <h3 className="dropdown-header-text">

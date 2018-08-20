@@ -3,7 +3,7 @@ import ChatContent from "./chatContent";
 import ChatInput from "./chatInput";
 import NoActiveChat from "./noActivity"
 import { connect } from "react-redux";
-import { updateActiveChat } from "../actions/index";
+import { updateChat } from "../actions/index";
 
 class ActiveChat extends Component {
 
@@ -13,9 +13,26 @@ class ActiveChat extends Component {
     this.inputHandler = this.inputHandler.bind(this)
   }
 
-  inputHandler(logs){
-    // Handle Input from chatInput
-    this.props.updateActiveChat(logs)
+  inputHandler(content){
+    // Handle Input from chatInput and push it to chat
+    this.props.updateChat(
+      {
+        userID:this.props.userID,
+        id:this.props.activeChat.id,
+        chatLog:{
+          content: content,
+          isUser: true
+      }
+      }
+    )
+    this.props.socket.emit("Chat Broadcast",{
+      userID:this.props.userID,
+      id:this.props.activeChat.id,
+      chatLog:{
+        content: content,
+        isUser: false
+    }
+    });
   };
 
   render() {
@@ -39,12 +56,15 @@ class ActiveChat extends Component {
 
 //Redux Mapping for Store and Actions
 const mapStateToProps = state => {
-  return { activeChat: state.activeChat };
+  return { 
+    activeChat: state.activeChat,
+    userID: state.userData.userID
+   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateActiveChat: chat => dispatch(updateActiveChat(chat))
+    updateChat: chat => dispatch(updateChat(chat))
   }
 }
 

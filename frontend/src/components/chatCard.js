@@ -2,22 +2,16 @@ import React, { Component } from "react";
 import "./scss/chatCard.css";
 
 class ChatCard extends Component {
-  constructor(){
-    super();
-
-    this.lastMessageHandler = this.lastMessageHandler.bind(this);
-  }
-  lastMessageHandler() {
-    var lastMessage= String(this.props.lastMessage)  
-    if (lastMessage.length > 45){
-      return lastMessage.substring(0,40)+"..."
+  trimHandler(string, length){
+    if (string.length > length){
+      return string.substring(0,length)+"..."
     }
-    return lastMessage
+    return string
   }
+
   render() {
     return (
       <div className={"columns card "+ this.props.isActive} onClick={() => {
-        console.log(this.props.isActive)
         this.props.onClick();
       }}>
         <div className="column is-3">
@@ -29,8 +23,8 @@ class ChatCard extends Component {
         </div>
         <div className="column">
           <div className="chatCardDetails">
-            <h3> {this.props.chatName} </h3>
-            <p> {this.lastMessageHandler()} </p>
+            <h3> {this.trimHandler(this.props.chatName,23)} </h3>
+            <p> {this.trimHandler(this.props.lastMessage,32)} </p>
           </div>
         </div>
       </div>
