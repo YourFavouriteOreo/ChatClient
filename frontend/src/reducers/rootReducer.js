@@ -3,7 +3,22 @@ import _ from "lodash";
 
 const initialState = {
     chats: {
-
+      "fart": {
+        id: "fart",
+        chatName: "fart",
+        chatLogs: [
+          
+        ],
+        isTyping: true
+      },
+      "id2": {
+        id: "id2",
+        chatName: "id2",
+        chatLogs: [
+          
+        ],
+        isTyping: true
+      }
     },
     activeChat : null,
     userData: {

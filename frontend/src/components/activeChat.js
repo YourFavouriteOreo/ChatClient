@@ -5,6 +5,7 @@ import NoActiveChat from "./noActivity"
 import { connect } from "react-redux";
 import { updateChat } from "../actions/index";
 
+
 class ActiveChat extends Component {
 
   constructor (props) {

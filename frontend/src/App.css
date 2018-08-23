@@ -9,6 +9,9 @@
   border-radius: 50%;
   width: 50px; }
 
+.hidden {
+  display: none; }
+
 /*! bulma.io v0.7.1 | MIT License | github.com/jgthms/bulma */
 @keyframes spinAround {
   from {

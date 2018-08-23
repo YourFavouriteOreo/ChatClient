@@ -9,6 +9,9 @@
   border-radius: 50%;
   width: 50px; }
 
+.hidden {
+  display: none; }
+
 .dropdown-content {
   width: 40vh; }
 
