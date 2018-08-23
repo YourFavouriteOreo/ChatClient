@@ -90,7 +90,7 @@ class App extends Component {
                           key={key}
                           chatName={this.props.chats[key]["chatName"]}
                           lastMessage={
-                            (this.props.chats[key].chatLogs?this.props.chats[key].chatLogs[this.props.chats[key].chatLogs.length-1].content:"")
+                            (this.props.chats[key].chatLogs[0] !== undefined?this.props.chats[key].chatLogs[this.props.chats[key].chatLogs.length-1].content:"")
                           }
                           onClick={() => {
                             this.chatCardHandler(key);
