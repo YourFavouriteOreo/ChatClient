@@ -1,5 +1,6 @@
 var socketio = require("socket.io");
 var uuid = require("uuid");
+var _ = require("lodash")
 
 module.exports.listen = function(app, dataSet) {
   io = socketio.listen(app);
@@ -20,15 +21,19 @@ module.exports.listen = function(app, dataSet) {
     dataSet.currentUsers.length = dataSet.currentUsers.length + 1;
     console.log("Current User Dataset: " + dataSet.currentUsers.length + "\n");
 
+    function IOWhisper(socketID,channel,payload) {
+      io.to(`${socketID}`).emit(
+        channel,
+        payload
+      );
+    }
+
     socket.on("Chat Broadcast", payload => {
       var chatToBeModified = dataSet.chats[payload.id]
       for (user in chatToBeModified.users){
         if (chatToBeModified.users[user] != payload.userID){
           var selectedUser = chatToBeModified.users[user]
-          io.to(`${dataSet.currentUsers[selectedUser].socket.id}`).emit(
-            "Chat Broadcast",
-            payload
-          );
+          IOWhisper(dataSet.currentUsers[selectedUser].socket.id,"Chat Broadcast",payload)
         }
       }
     });
@@ -46,10 +51,7 @@ module.exports.listen = function(app, dataSet) {
           host: [data.userID]
         };
         dataSet.chats[chatID].users.map(function(key) {
-          io.to(`${dataSet.currentUsers[key].socket.id}`).emit(
-            "Add Chat",
-            chatID
-          );
+          IOWhisper(dataSet.currentUsers[key].socket.id,"Add Chat",chatID)
         });
       } else {
         console.log("Provided ID does not exist");

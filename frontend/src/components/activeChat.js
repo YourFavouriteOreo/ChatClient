@@ -4,6 +4,7 @@ import ChatInput from "./chatInput";
 import NoActiveChat from "./noActivity"
 import { connect } from "react-redux";
 import { updateChat } from "../actions/index";
+import _ from "lodash"
 
 
 class ActiveChat extends Component {
@@ -16,24 +17,18 @@ class ActiveChat extends Component {
 
   inputHandler(content){
     // Handle Input from chatInput and push it to chat
-    this.props.updateChat(
-      {
-        userID:this.props.userID,
-        id:this.props.activeChat.id,
-        chatLog:{
-          content: content,
-          isUser: true
-      }
-      }
-    )
-    this.props.socket.emit("Chat Broadcast",{
+    var payload = {
       userID:this.props.userID,
       id:this.props.activeChat.id,
       chatLog:{
         content: content,
-        isUser: false
+        isUser: true
+      }
     }
-    });
+    this.props.updateChat(payload)
+    var broadcastPayload = _.cloneDeep(payload)
+    broadcastPayload.chatLog.isUser = false;
+    this.props.socket.emit("Chat Broadcast",broadcastPayload);
   };
 
   render() {
