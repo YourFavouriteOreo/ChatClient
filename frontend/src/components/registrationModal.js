@@ -38,7 +38,7 @@ class RegistrationModal extends Component {
                 <h1 className="header-text"> Welcome to <span className="purple">Oreo Client</span></h1>
             <p className="header-description"> Below is your ID . If you would like to re-use existing chats in future visits</p>
                 <div className="control">
-            <input className="input inputRegistration animated bounceInLeft" value={this.props.userID} disabled={true}/>
+            <input className="input inputRegistration animated bounceInLeft" value={this.props.userID} readOnly={true}/>
             </div>
             <p className="header-description"> If you are a revisiting user and have your previous ID. Please provide the necessary information below.</p>
             <div className="control">

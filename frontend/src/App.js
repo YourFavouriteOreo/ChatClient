@@ -6,7 +6,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 import ChatCard from "./components/chatCard";
 import ActiveChat from "./components/activeChat";
 import { connect } from "react-redux";
-import { selectActiveChat,updateChatList,updateChat } from "./actions/index";
+import { selectActiveChat,updateChatList,updateChat, updateChatTyping } from "./actions/index";
 import RegistrationModal from "./components/registrationModal";
 import DropDown from "./components/DropDown"
 const socket = require("socket.io-client")(
@@ -25,18 +25,23 @@ class App extends Component {
     socket.on("Add Chat", data => {
       this.props.updateChatList(data)
     });
+
+    socket.on("Chat isTyping",data => {
+      this.props.updateChatTyping(data)
+    })
+
     socket.on("Chat Broadcast",data => {
       console.log("CHAT BROADCAST RECEIVED")
       this.props.updateChat(data)
     })
   };
 
-  componentWillReceiveProps() {}
   chatCardHandler(index) {
     this.props.selectActive({ index });
   }
 
   chatCardActiveHandler(index) {
+    // Handle active class on chatCard
     if (this.props.activeChat) {
       return index === this.props.activeChat.index ? "active" : "";
     }
@@ -54,12 +59,11 @@ class App extends Component {
                 <div className="topColumn">
                   <div className="level">
                     <div className="level-left">
-                      {" "}
                       <img
                         className="smallAvatar topBarIcon"
                         src="https://picsum.photos/200/200/?random"
                         alt=""
-                      />{" "}
+                      />
                     </div>
                     <div className="level-right">
                       <span className="icon, level-item">
@@ -122,7 +126,8 @@ const mapDispatchToProps = dispatch => {
   return {
     selectActive: chat => dispatch(selectActiveChat(chat)),
     updateChatList: chat => dispatch(updateChatList(chat)),
-    updateChat: logs => dispatch(updateChat(logs))
+    updateChat: logs => dispatch(updateChat(logs)),
+    updateChatTyping: chat => dispatch(updateChatTyping(chat))
   };
 };
 

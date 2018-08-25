@@ -1,5 +1,6 @@
-import {SELECT_ACTIVE, UPDATE_CHAT, UPDATE_USERID,UPDATE_CHAT_LIST} from '../constants/action-types';
+import {SELECT_ACTIVE, UPDATE_CHAT, UPDATE_USERID,UPDATE_CHAT_LIST,UPDATE_CHAT_TYPING} from '../constants/action-types';
 import _ from "lodash";
+var chatState = {}
 
 const initialState = {
     chats: {
@@ -7,7 +8,6 @@ const initialState = {
       //   id: "test1",
       //   chatName: "test1",
       //   chatLogs: [
-          
       //   ],
       //   isTyping: true
       // },
@@ -15,7 +15,6 @@ const initialState = {
       //   id: "test2",
       //   chatName: "test2",
       //   chatLogs: [
-          
       //   ],
       //   isTyping: true
       // }
@@ -37,9 +36,14 @@ const initialState = {
             newActive["index"]= action.payload.index
             return {...state,activeChat:newActive};
 
+          case UPDATE_CHAT_TYPING:
+            chatState = _.cloneDeep(state)
+            chatState.chats[action.payload.id].isTyping = action.payload.isTyping
+            return {...chatState}
+
           case UPDATE_CHAT:
           // Update store with new Chat Content
-            var chatState = _.cloneDeep(state)
+            chatState = _.cloneDeep(state)
             var chatToBeUpdated = chatState.chats[action.payload.id]
             chatToBeUpdated.chatLogs = chatToBeUpdated.chatLogs.concat(action.payload.chatLog)
             return {...chatState}
@@ -57,9 +61,8 @@ const initialState = {
               id: action.payload,
               chatName: action.payload,
               chatLogs: [
-                
               ],
-              isTyping: true
+              isTyping: false
             }
             return newState
 

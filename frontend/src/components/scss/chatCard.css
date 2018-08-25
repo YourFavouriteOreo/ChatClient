@@ -28,7 +28,7 @@
 .chatCardDetails {
   margin-top: 1.2em; }
   .chatCardDetails > h3 {
-    font-family: "Quicksand",sans-serif;
+    font-family: "Quicksand", "Raleway" ,sans-serif;
     font-weight: bold; }
   .chatCardDetails > p {
     font-family: "Roboto",sans-serif;

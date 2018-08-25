@@ -28,14 +28,35 @@ module.exports.listen = function(app, dataSet) {
       );
     }
 
-    socket.on("Chat Broadcast", payload => {
-      var chatToBeModified = dataSet.chats[payload.id]
+    function mapToPayloadUsers(chatID,functionToMap,payload,userID = null){
+      var chatToBeModified = dataSet.chats[chatID]
       for (user in chatToBeModified.users){
-        if (chatToBeModified.users[user] != payload.userID){
+        if (chatToBeModified.users[user] != userID){
           var selectedUser = chatToBeModified.users[user]
-          IOWhisper(dataSet.currentUsers[selectedUser].socket.id,"Chat Broadcast",payload)
+          functionToMap(selectedUser,payload)
         }
       }
+    }
+
+    socket.on("Chat isTyping", payload => {
+      mapToPayloadUsers(payload.id,
+        function (selectedUser,payload){
+          IOWhisper(dataSet.currentUsers[selectedUser].socket.id,"Chat isTyping",payload)
+        },
+        payload,
+        payload.userID
+      )
+    })
+
+    //Sends Text to all members of chat except sendee
+    socket.on("Chat Broadcast", payload => {
+      mapToPayloadUsers(payload.id,
+        function (selectedUser,payload){
+          IOWhisper(dataSet.currentUsers[selectedUser].socket.id,"Chat Broadcast",payload)
+        },
+        payload,
+        payload.userID
+      )
     });
 
     socket.on("Add Chat", data => {

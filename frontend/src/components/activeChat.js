@@ -11,8 +11,13 @@ class ActiveChat extends Component {
 
   constructor (props) {
     super(props);
-
+    this.isTypingHandler = this.isTypingHandler.bind(this)
     this.inputHandler = this.inputHandler.bind(this)
+  }
+
+  isTypingHandler(payload){
+    console.log(payload);
+    this.props.socket.emit("Chat isTyping",payload);
   }
 
   inputHandler(content){
@@ -40,7 +45,7 @@ class ActiveChat extends Component {
             <p style={{fontFamily:"Roboto,sans-serif",marginLeft: "0.75rem",lineHeight:"1"}}> Chat Participants </p>
           </div>
           <ChatContent/>
-          <ChatInput postSubmit={this.inputHandler} />
+          <ChatInput isTypingHandler={this.isTypingHandler} postSubmit={this.inputHandler} />
         </div>
       );
     }

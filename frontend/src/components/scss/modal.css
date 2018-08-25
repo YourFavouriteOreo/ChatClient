@@ -18,7 +18,8 @@
   text-align: center;
   font-size: 1.1rem; }
   .header-text .purple {
-    color: #89216b; }
+    color: #89216b;
+    font-family: "Raleway", "Quicksand", sans-serif; }
 
 .header-description {
   font-family: "Roboto",sans-serif;
