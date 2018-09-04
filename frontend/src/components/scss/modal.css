@@ -26,8 +26,8 @@
   font-size: 0.9rem;
   text-align: center; }
 
-.control {
-  margin: 0.75rem 0; }
+.control-custom {
+  margin: 1.2rem; }
 
 .inputRegistration {
   color: #89216b !important;
@@ -44,7 +44,7 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
-  height: 20vh; }
+  height: 2vh; }
 
 .modal-card-body {
   border-radius: 10px; }

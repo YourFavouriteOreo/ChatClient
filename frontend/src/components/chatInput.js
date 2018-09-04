@@ -21,6 +21,12 @@ class ChatInput extends Component {
   // Handle Text Log Submission
   submitHandler = e => {
     this.setState({ isTyping: false })
+    this.props.isTypingHandler({
+      id:this.props.chatID,
+      isTyping:false,
+      publicID:this.props.publicID
+    })
+    
     e.preventDefault();
     if (this.state.currentInput === "") {
       return null;
@@ -44,7 +50,7 @@ class ChatInput extends Component {
       this.props.isTypingHandler({
         id:this.props.chatID,
         isTyping:true,
-        userID:this.props.userID
+        publicID:this.props.publicID
       })
     }
     else if (this.state.currentInput.length <= 1 && this.state.isTyping === true) {
@@ -54,7 +60,7 @@ class ChatInput extends Component {
       this.props.isTypingHandler({
         id:this.props.chatID,
         isTyping:false,
-        userID:this.props.userID
+        publicID:this.props.publicID
       })
     }
   };
@@ -108,7 +114,7 @@ class ChatInput extends Component {
 const mapStateToProps = state => {
   return { 
     chatID: state.activeChat.id,
-    userID: state.userData.userID
+    publicID: state.userData.publicID
    };
 };
 

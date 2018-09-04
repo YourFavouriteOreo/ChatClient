@@ -21,7 +21,9 @@ const initialState = {
     },
     activeChat : null,
     userData: {
-      userID: null
+      privateID: "",
+      publicID: "",
+      publicName: ""
     }
   };
 
@@ -44,6 +46,8 @@ const initialState = {
           case UPDATE_CHAT:
           // Update store with new Chat Content
             chatState = _.cloneDeep(state)
+            console.log(action.payload.id)
+            console.log(chatState)
             var chatToBeUpdated = chatState.chats[action.payload.id]
             chatToBeUpdated.chatLogs = chatToBeUpdated.chatLogs.concat(action.payload.chatLog)
             return {...chatState}
@@ -51,15 +55,15 @@ const initialState = {
             case UPDATE_USERID:
           // Update user ID upon receiving registration
             newState = Object.assign(state)
-            newState.userData.userID = action.payload.userID
+            newState.userData = action.payload
             return {...newState}
 
             case UPDATE_CHAT_LIST:
             // Create new chats than have been verified via server 
             newState = _.cloneDeep(state)
-            newState.chats[action.payload] = {
-              id: action.payload,
-              chatName: action.payload,
+            newState.chats[action.payload.id] = {
+              id: action.payload.id,
+              chatName: action.payload.name,
               chatLogs: [
               ],
               isTyping: false

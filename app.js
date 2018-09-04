@@ -1,10 +1,10 @@
 var express = require('express')
 var app = express();
 var server = require('http').Server(app);
-
+var mongooseInstance = require('./db')
 var chats = {length:0};
 var currentUsers = {length:0};
-var io = require('./webSocketHandling').listen(server,{chats,currentUsers});
+var io = require('./webSocketHandling').listen(server,mongooseInstance,{chats,currentUsers});
 
 const path = require('path')
 

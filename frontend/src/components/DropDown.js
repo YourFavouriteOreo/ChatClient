@@ -23,7 +23,7 @@ class DropDown extends Component {
     onSubmitHandler =event=>{
       event.preventDefault();
       var socket = this.props.socket;
-      socket.emit("Add Chat",{userID:this.props.userID,friendID:this.state.currentInput})
+      socket.emit("Add Chat",{publicID:this.props.publicID,friendID:this.state.currentInput})
     }
 
   render() {
@@ -65,7 +65,7 @@ class DropDown extends Component {
 
 const mapStateToProps = state => {
   return {
-    userID: state.userData.userID,
+    publicID: state.userData.publicID,
   };
 };
 

@@ -1,54 +1,81 @@
 import React, { Component } from "react";
 import "./scss/modal.css";
-import {connect} from 'react-redux'
-import { updateUserID } from "../actions/index";
+import RegistrationForm from "./registrationModal/registration";
+import { connect } from "react-redux";
 
 class RegistrationModal extends Component {
-  constructor (){
+  constructor() {
     super();
 
     this.state = {
-      isComplete : false,
-      received: false
-    }
+      isCompleteGetting: false,
+      isComplete: false
+    };
   }
 
-  toggleComplete() {
-    this.setState({
-      isComplete: true
-    })
+  componentDidMount() {
+    this.props.socket.on("register", () => {
+      this.setState({ isCompleteGetting: true });
+    });
   }
-    componentWillMount(){
-        var socket = this.props.socket;
-        socket.on("register", data => {
-              this.props.updateUserID(data)
-              socket.removeListener('register');
-            });
-    }
 
   render() {
     return (
-      <div className={"modal "+ (this.state.isComplete?"":"is-active")}>
+      <div className={"modal " + (this.state.isComplete ? "" : "is-active")}>
         <div className="modal-background" />
         <div className="modal-card">
           <section className="modal-card-body">
-            {this.props.userID
-            ?(
-            <div>
-                <h1 className="header-text"> Welcome to <span className="purple">Oreo Client</span></h1>
-            <p className="header-description"> Below is your ID . If you would like to re-use existing chats in future visits</p>
-                <div className="control">
-            <input className="input inputRegistration animated bounceInLeft" value={this.props.userID} readOnly={true}/>
-            </div>
-            <p className="header-description"> If you are a revisiting user and have your previous ID. Please provide the necessary information below.</p>
-            <div className="control">
-            <input className="input inputRegistration animated " />
-            </div>
-            <button className="button submitButton" type="submit" onClick={() => {this.toggleComplete()}}> Continue <i className="fas fa-arrow-right"> </i></button>
-            </div>
-            )
-            : <div> <h1 className="header-text"> We are preparing your User ID . Please wait a moment.</h1>  <img alt="Loading Icon" className="loadingIcon" src={require("../assets/img/loading.svg")} /></div>
-         }
+            {!this.state.isCompleteGetting ? (
+              <RegistrationForm socket={this.props.socket} />
+            ) : (
+              <div>
+                <h1 className="header-text">
+                  <span role="img" aria-label="Red Heart">
+                    ❤️
+                  </span>
+                  Welcome to your new account
+                  <span role="img" aria-label="Red Heart">
+                    ❤️
+                  </span>
+                </h1>
+                <div className="control-custom">
+                  <p className="header-description">
+                    Below is your private ID . Use this to re-log back into your
+                    account
+                  </p>
+                  <p className="header-description">
+                    <b> Do not share this with anyone</b>
+                  </p>
+                  <input
+                    className="input inputRegistration animated "
+                    readOnly={true}
+                    value={this.props.privateID}
+                  />
+                </div>
+                <div className="control-custom">
+                  <p className="header-description">
+                    Below is your public ID . Share this your buddies to engage
+                    in chats
+                  </p>
+                  <input
+                    className="input inputRegistration animated "
+                    readOnly={true}
+                    value={this.props.publicID}
+                  />
+                </div>
+                <button 
+                className="button submitButton" 
+                type="submit"
+                onClick= {()=> {this.setState({isComplete: true})}}
+                >
+                  Complete Registration <i className="fas fa-arrow-right"> </i>{" "}
+                </button>
+                <h1 className="header-description control">
+                  Thank you for trying out Oreo Client . I hope you enjoy using
+                  my client
+                </h1>
+              </div>
+            )}
           </section>
         </div>
       </div>
@@ -57,17 +84,15 @@ class RegistrationModal extends Component {
 }
 
 const mapStateToProps = state => {
-    return {
-      userID: state.userData.userID,
-    };
+  return {
+    privateID: state.userData.privateID,
+    publicID: state.userData.publicID
   };
+};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        updateUserID: userID => dispatch(updateUserID(userID))
-      };
-}
+var connectedRegistrationModal = connect(
+  mapStateToProps,
+  null
+)(RegistrationModal);
 
-const ConnectedRegsitrationModal = connect(mapStateToProps,mapDispatchToProps)(RegistrationModal)
-
-export default ConnectedRegsitrationModal;
+export default connectedRegistrationModal;

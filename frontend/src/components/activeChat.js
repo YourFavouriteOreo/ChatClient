@@ -23,7 +23,7 @@ class ActiveChat extends Component {
   inputHandler(content){
     // Handle Input from chatInput and push it to chat
     var payload = {
-      userID:this.props.userID,
+      publicID:this.props.publicID,
       id:this.props.activeChat.id,
       chatLog:{
         content: content,
@@ -59,7 +59,7 @@ class ActiveChat extends Component {
 const mapStateToProps = state => {
   return { 
     activeChat: state.activeChat,
-    userID: state.userData.userID
+    publicID: state.userData.publicID
    };
 };
 

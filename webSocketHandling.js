@@ -2,24 +2,48 @@ var socketio = require("socket.io");
 var uuid = require("uuid");
 var _ = require("lodash")
 
-module.exports.listen = function(app, dataSet) {
+// DB Vars
+var serverReady = false;
+var userModel = require('./Schemas/User')
+
+module.exports.listen = function(app, mongooseInstance, dataSet) {
+  mongooseInstance.once('open',function callback() {
+    serverReady = true;
+  })
+
   io = socketio.listen(app);
 
   io.on("connection", function(socket) {
     /*
-     Give User Registration ID . This is to still provide identification within the system
-     I wanted to avoid data storage as I know I will not be focusing heavily on security
-     apart from not being a security specialist myself.
+     User Registration
     */
     console.log("A user has connected");
-    var newUserID = uuid();
-    io.emit("register", {
-      userID: newUserID
-    });
-    console.log(newUserID);
-    dataSet.currentUsers[newUserID] = { socket: socket };
-    dataSet.currentUsers.length = dataSet.currentUsers.length + 1;
-    console.log("Current User Dataset: " + dataSet.currentUsers.length + "\n");
+
+    socket.on("registerID", payload => {
+      console.log
+      if (serverReady){
+        var newUser = new userModel({publicName:payload})
+        newUser.save().then( (user,err) => {
+            if (err){
+              console.log("ERROR USER")
+              console.log(err);
+            }
+            else {
+              console.log("emitting")
+              IOWhisper(socket.id,"register", {
+                privateID: user.privateID,
+                publicID: user.publicID,
+                publicName: user.publicName
+              });
+  
+              dataSet.currentUsers[user.publicID] = { socket: socket , publicName:user.publicName};
+              dataSet.currentUsers.length = dataSet.currentUsers.length + 1;
+              console.log("Current User Dataset: " + dataSet.currentUsers.length + "\n");
+            }
+        })
+      }
+    })
+
 
     function IOWhisper(socketID,channel,payload) {
       io.to(`${socketID}`).emit(
@@ -28,10 +52,10 @@ module.exports.listen = function(app, dataSet) {
       );
     }
 
-    function mapToPayloadUsers(chatID,functionToMap,payload,userID = null){
+    function mapToPayloadUsers(chatID,functionToMap,payload,publicID = null){
       var chatToBeModified = dataSet.chats[chatID]
       for (user in chatToBeModified.users){
-        if (chatToBeModified.users[user] != userID){
+        if (chatToBeModified.users[user] != publicID){
           var selectedUser = chatToBeModified.users[user]
           functionToMap(selectedUser,payload)
         }
@@ -44,7 +68,7 @@ module.exports.listen = function(app, dataSet) {
           IOWhisper(dataSet.currentUsers[selectedUser].socket.id,"Chat isTyping",payload)
         },
         payload,
-        payload.userID
+        payload.publicID
       )
     })
 
@@ -55,26 +79,39 @@ module.exports.listen = function(app, dataSet) {
           IOWhisper(dataSet.currentUsers[selectedUser].socket.id,"Chat Broadcast",payload)
         },
         payload,
-        payload.userID
+        payload.publicID
       )
     });
 
     socket.on("Add Chat", data => {
       // Verify that the requested chat connection has two EXISTING participants
       if (
-        dataSet.currentUsers[data.userID] &&
+        dataSet.currentUsers[data.publicID] &&
         dataSet.currentUsers[data.friendID]
       ) {
-        var chatID = uuid();
+        var chat = {
+          id:uuid(),
+          name: "New Chat"
+        }
       // Store existance of chat for future routing
-        dataSet.chats[chatID] = {
-          users: [data.userID, data.friendID],
-          host: [data.userID]
+        dataSet.chats[chat.id] = {
+          users: [data.publicID, data.friendID],
+          host: [data.publicID]
         };
-        dataSet.chats[chatID].users.map(function(key) {
-          IOWhisper(dataSet.currentUsers[key].socket.id,"Add Chat",chatID)
+        dataSet.chats[chat.id].users.map(function(key,index) {
+          var friendID ;
+          if (index === 0){
+            friendID = dataSet.chats[chat.id].users[1]
+          }
+          else {
+            friendID = dataSet.chats[chat.id].users[0]
+          }
+          chat["name"] = dataSet.currentUsers[friendID].publicName
+          IOWhisper(dataSet.currentUsers[key].socket.id,"Add Chat",chat)
         });
       } else {
+        console.log(dataSet.currentUsers);
+        console.log(data);
         console.log("Provided ID does not exist");
       }
     });

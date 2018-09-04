@@ -31,7 +31,6 @@ class App extends Component {
     })
 
     socket.on("Chat Broadcast",data => {
-      console.log("CHAT BROADCAST RECEIVED")
       this.props.updateChat(data)
     })
   };
